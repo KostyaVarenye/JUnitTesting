@@ -15,5 +15,11 @@ class ContactManagerTest {
         Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
         // expected to have exactly 1 contact
         Assertions.assertEquals(1, contactManager.getAllContacts().size());
+        // find if was created successfully and matching
+        Assertions.assertTrue(contactManager.getAllContacts().stream()
+                .filter(contact -> contact.getFirstName().equals("John") &&
+                        contact.getLastName().equals("Doe") &&
+                        contact.getPhoneNumber().equals("0123456789")).findAny().isPresent());
+
     }
 }

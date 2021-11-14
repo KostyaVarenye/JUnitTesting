@@ -19,6 +19,19 @@ public class Contact {
         return lastName;
     }
 
+    public String getPhoneNumber() { return phoneNumber; }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+
     public void validateFirstName() {
         if (this.firstName.isBlank())
             throw new RuntimeException("First Name Cannot be null or empty");
