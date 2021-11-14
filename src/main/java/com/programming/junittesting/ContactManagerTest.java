@@ -35,6 +35,7 @@ class ContactManagerTest {
         contactManager = new ContactManager();
 
     }
+    // function for duplicate code of onlyWindows/onlyMac
     public void shouldCreate(){
         contactManager.addContact("John", "Doe", "0123456789");
         // test if the method is not empty, if contact created
@@ -51,16 +52,6 @@ class ContactManagerTest {
     @DisplayName("Should Create Contact Only on WINDOWS")
     @EnabledOnOs(value = OS.WINDOWS, disabledReason = "Enabled only on WINDOWS OS")
     public void shouldCreateContactOnlyOnWindows(){
-//        contactManager.addContact("John", "Doe", "0123456789");
-//        // test if the method is not empty, if contact created
-//        Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
-//        // expected to have exactly 1 contact
-//        Assertions.assertEquals(1, contactManager.getAllContacts().size());
-//        // find if was created successfully and matching
-//        Assertions.assertTrue(contactManager.getAllContacts().stream()
-//                .anyMatch(contact -> contact.getFirstName().equals("John") &&
-//                        contact.getLastName().equals("Doe") &&
-//                        contact.getPhoneNumber().equals("0123456789")));
         shouldCreate();
     }
 
@@ -102,16 +93,17 @@ class ContactManagerTest {
     @DisplayName("Should Create Contact Only on MAC OS")
     @EnabledOnOs(value = OS.MAC, disabledReason = "Enabled only on MacOS")
     public void shouldCreateContactOnlyOnMac(){
-//        contactManager.addContact("John", "Doe", "0123456789");
-//        // test if the method is not empty, if contact created
-//        Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
-//        // expected to have exactly 1 contact
-//        Assertions.assertEquals(1, contactManager.getAllContacts().size());
-//        // find if was created successfully and matching
-//        Assertions.assertTrue(contactManager.getAllContacts().stream()
-//                .anyMatch(contact -> contact.getFirstName().equals("John") &&
-//                        contact.getLastName().equals("Doe") &&
-//                        contact.getPhoneNumber().equals("0123456789")));
         shouldCreate();
+    }
+
+    //assumption that were testing on DEV with parameter passed in the Edit Configurations if fails, the tests won't fail
+    @Test
+    @DisplayName("Test Contact Creation on Developer Machine")
+    public void shouldTestContactCreationOnDEV() {
+        Assumptions.assumeTrue("DEV".equals(System.getProperty("ENV")));
+        contactManager.addContact("John", "Doe", "0123456789");
+        assertFalse(contactManager.getAllContacts().isEmpty());
+        assertEquals(1, contactManager.getAllContacts().size());
+
     }
 }
