@@ -3,6 +3,14 @@ package com.programming.junittesting;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -106,13 +114,59 @@ class ContactManagerTest {
         assertEquals(1, contactManager.getAllContacts().size());
 
     }
+    //@Test is missing because its a repeated test, assigned value = times to repeat, name = to write in tests with auto parameters of current and total reps
 
-    @DisplayName("Should Create Contact 5 Times")
     @RepeatedTest(value = 5,
             name= "Repeating Contact Creation Test {currentRepetition} of {totalRepetitions}")
+    @DisplayName("Should Create Contact 5 Times")
     public void shouldCreateContactFiveTimes(){
         contactManager.addContact("John", "Doe", "0123456789");
         assertFalse(contactManager.getAllContacts().isEmpty());
         assertEquals(1, contactManager.getAllContacts().size());
     }
+
+    /* Tests with parameters. substitutes @Test
+    * Data is provided using @ValueSource - Strings, Ints, Longs, Shorts, Floats, Doubles, Bytes, Chars, classes.
+    * @CsvSource */
+
+    @ParameterizedTest
+    @ValueSource(strings = {"0123456789", "0123756789", "0173456789" })
+    @DisplayName("Should Create Contact and Test 3 Different Strings with ValueSource")
+    public void shouldTestContactCreationUsingValueSource( String phoneNumber){
+        contactManager.addContact("John", "Doe", phoneNumber);
+        assertFalse(contactManager.getAllContacts().isEmpty());
+        assertEquals(1, contactManager.getAllContacts().size());
+    }
+
+    private static List<String> phoneNumberList() {
+        return Arrays.asList("0123456789", "0223756789", "0373456789");
+    }
+    // Method source, injecting a list of phoneNumbers ^
+    @ParameterizedTest
+    @DisplayName("Test MethodSource")
+    @MethodSource("phoneNumberList")
+    public void shouldTestContactCreationUsingMethodSource( String phoneNumber){
+        contactManager.addContact("John", "Doe", phoneNumber);
+        assertFalse(contactManager.getAllContacts().isEmpty());
+        assertEquals(1, contactManager.getAllContacts().size());
+    }
+
+    @ParameterizedTest
+    @DisplayName("Test CsvSource - Number Should Match the Required Format")
+    @CsvSource({"0123456789", "0223756789", "0373456789"})
+    public void shouldTestContactCreationUsingCsvSource(String phoneNumber){
+        contactManager.addContact("John", "Doe", phoneNumber);
+        assertFalse(contactManager.getAllContacts().isEmpty());
+        assertEquals(1, contactManager.getAllContacts().size());
+    }
+
+    @ParameterizedTest
+    @DisplayName("Test CsvFileSource - Number Should Match the Required Format From CSV")
+    @CsvFileSource(resources = "/data.csv")
+    public void shouldTestContactCreationUsingCsvFileSource(String phoneNumber){
+        contactManager.addContact("John", "Doe", phoneNumber);
+        assertFalse(contactManager.getAllContacts().isEmpty());
+        assertEquals(1, contactManager.getAllContacts().size());
+    }
+
 }
