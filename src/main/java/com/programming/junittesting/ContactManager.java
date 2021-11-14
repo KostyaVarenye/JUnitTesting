@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ContactManager {
 
     Map<String, Contact> contactList = new ConcurrentHashMap<String, Contact>();
+    /* ctrl shift t in intellij shortcut to create tests*/
 
     public void addContact(String firstName, String lastName, String phoneNumber) {
         Contact contact = new Contact(firstName, lastName, phoneNumber);
