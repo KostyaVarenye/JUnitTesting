@@ -1,6 +1,8 @@
 package com.programming.junittesting;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,9 +35,7 @@ class ContactManagerTest {
         contactManager = new ContactManager();
 
     }
-
-    @Test
-    public void shouldCreateContact(){
+    public void shouldCreate(){
         contactManager.addContact("John", "Doe", "0123456789");
         // test if the method is not empty, if contact created
         Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
@@ -46,6 +46,22 @@ class ContactManagerTest {
                 .anyMatch(contact -> contact.getFirstName().equals("John") &&
                         contact.getLastName().equals("Doe") &&
                         contact.getPhoneNumber().equals("0123456789")));
+    }
+    @Test
+    @DisplayName("Should Create Contact Only on WINDOWS")
+    @EnabledOnOs(value = OS.WINDOWS, disabledReason = "Enabled only on WINDOWS OS")
+    public void shouldCreateContactOnlyOnWindows(){
+//        contactManager.addContact("John", "Doe", "0123456789");
+//        // test if the method is not empty, if contact created
+//        Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
+//        // expected to have exactly 1 contact
+//        Assertions.assertEquals(1, contactManager.getAllContacts().size());
+//        // find if was created successfully and matching
+//        Assertions.assertTrue(contactManager.getAllContacts().stream()
+//                .anyMatch(contact -> contact.getFirstName().equals("John") &&
+//                        contact.getLastName().equals("Doe") &&
+//                        contact.getPhoneNumber().equals("0123456789")));
+        shouldCreate();
     }
 
     @Test
@@ -80,5 +96,22 @@ class ContactManagerTest {
     @AfterAll
     public void tearDownAll() {
         System.out.println("Should be executed at the end of the @Test");
+    }
+
+    @Test
+    @DisplayName("Should Create Contact Only on MAC OS")
+    @EnabledOnOs(value = OS.MAC, disabledReason = "Enabled only on MacOS")
+    public void shouldCreateContactOnlyOnMac(){
+//        contactManager.addContact("John", "Doe", "0123456789");
+//        // test if the method is not empty, if contact created
+//        Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
+//        // expected to have exactly 1 contact
+//        Assertions.assertEquals(1, contactManager.getAllContacts().size());
+//        // find if was created successfully and matching
+//        Assertions.assertTrue(contactManager.getAllContacts().stream()
+//                .anyMatch(contact -> contact.getFirstName().equals("John") &&
+//                        contact.getLastName().equals("Doe") &&
+//                        contact.getPhoneNumber().equals("0123456789")));
+        shouldCreate();
     }
 }
