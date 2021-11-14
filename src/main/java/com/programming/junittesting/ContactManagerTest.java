@@ -106,4 +106,13 @@ class ContactManagerTest {
         assertEquals(1, contactManager.getAllContacts().size());
 
     }
+
+    @DisplayName("Should Create Contact 5 Times")
+    @RepeatedTest(value = 5,
+            name= "Repeating Contact Creation Test {currentRepetition} of {totalRepetitions}")
+    public void shouldCreateContactFiveTimes(){
+        contactManager.addContact("John", "Doe", "0123456789");
+        assertFalse(contactManager.getAllContacts().isEmpty());
+        assertEquals(1, contactManager.getAllContacts().size());
+    }
 }
