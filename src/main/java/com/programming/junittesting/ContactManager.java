@@ -1,4 +1,4 @@
-package com.programming.techie;
+package com.programming.junittesting;
 
 import java.util.Collection;
 import java.util.Map;

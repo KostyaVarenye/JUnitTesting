@@ -1,4 +1,4 @@
-package com.programming.techie;
+package com.programming.junittesting;
 
 public class Contact {
     private String firstName;
